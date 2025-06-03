@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { XMLParser } from "fast-xml-parser";
+import  { useEffect } from 'react';
+import { getRules } from './api';
 
 function App() {
   const [oldXml, setOldXml] = useState(null);
@@ -14,6 +16,25 @@ function App() {
     port: '',
     serviceName: ''
   });
+
+  const RulesComponent = () => {
+  const [rules, setRules] = useState([]);
+
+  useEffect(() => {
+    getRules()
+      .then(setRules)
+      .catch((err) => console.error(err));
+  }, []);
+
+  return (
+    <div>
+      <h2>Rules</h2>
+      <pre>{JSON.stringify(rules, null, 2)}</pre>
+    </div>
+  );
+};
+
+  
   const [loading, setLoading] = useState(false);
 
   const handleFile = (e, setXml) => {
@@ -34,6 +55,7 @@ function App() {
       ignoreDeclaration: true,
       removeNSPrefix: true,
     });
+    
 
     const parsed = parser.parse(xml);
 
