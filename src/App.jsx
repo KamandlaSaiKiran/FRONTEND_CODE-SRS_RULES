@@ -149,7 +149,7 @@ function App() {
     const enriched = await Promise.all(
       rules.map(async (rule) => {
         try {
-          const response = await fetch("https://your-railway-backend.up.railway.app/rule", {
+          const response = await fetch("https://backendcode-srsrules-production.up.railway.app", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
